@@ -54,15 +54,16 @@ pprint.pprint(songs)
 
 
 # Creates the playlist in Spotify and adds the songs from top 100:
+playlist_name = f"Billboard Top100 - week of: {formatted_date}"
 user_existing_playlist = [list["name"] for list in spoty.current_user_playlists()["items"]]
-if "Billboard top 100 playlist!" in user_existing_playlist:
+if playlist_name in user_existing_playlist:
     print("Playlist already exists!")
 else:
-    spoty.user_playlist_create(user=spoty.current_user()["id"], public=False, name=f"Billboard top 100 playlist!")
+    spoty.user_playlist_create(user=spoty.current_user()["id"], public=False, name=playlist_name)
     print("The Playlist has been created, please check your account!")
 
 playlist_uri = [item["uri"] for item in spoty.current_user_playlists()["items"]
-                if item["name"] == "Billboard top 100 playlist!"]
+                if item["name"] == playlist_name]
 
 songs_uri_list = [uri["spotify_uri"] for uri in songs if uri["spotify_uri"] != "404 - Not Found!"]
 list_for_POST = []
